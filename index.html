@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink Pro | Emergency Network</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-sidebar">
+            <div class="nav-brand">LifeLink<span>Pro</span></div>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="switchPane('home-pane', this)">🏠 Home</div>
+                <div class="nav-item" onclick="switchPane('hosp-pane', this)">🩸 Search Donors</div>
+                <div class="nav-item" onclick="switchPane('reg-pane', this)">📝 Register Donor</div>
+                <div class="nav-item" onclick="switchPane('hosp-reg-pane', this)">🏥 Register Hospital</div>
+                <div class="nav-item" onclick="switchPane('login-pane', this)">👤 Profile</div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div id="home-pane" class="pane active">
+                <section class="hero">
+                    <h1>Every Drop Counts.</h1>
+                    <div class="stats">
+                        <div><b id="stat-donors">0</b><br><small>HEROES</small></div>
+                        <div><b id="stat-hospitals">0</b><br><small>HOSPITALS</small></div>
+                    </div>
+                </section>
+                <div class="card">
+                    <h3>🏆 Savior Leaderboard</h3>
+                    <div id="leaderboard-list">Loading...</div>
+                </div>
+            </div>
+
+            <div id="hosp-pane" class="pane">
+                <div class="card">
+                    <h2>Find Donors</h2>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <select id="searchBlood" style="margin:0;">
+                            <option value="">Blood Group</option>
+                            <option value="A+">A+</option><option value="O+">O+</option>
+                            <option value="B+">B+</option><option value="AB+">AB+</option>
+                            <option value="A-">A-</option><option value="O-">O-</option>
+                        </select>
+                        <button class="btn btn-primary" style="width:120px; margin:0;" onclick="searchDonors()">Search</button>
+                    </div>
+                    <div id="search-results"></div>
+                </div>
+
+                <div class="card" style="border: 2px solid var(--brand); background: #fff1f2;">
+                    <h3 style="color: var(--brand);">🚨 Emergency Broadcast</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <select id="alertBlood" style="background: white;">
+                            <option value="">Select Type</option>
+                            <option value="A+">A+</option><option value="O+">O+</option>
+                            <option value="B+">B+</option><option value="O-">O-</option>
+                        </select>
+                        <button class="btn btn-danger" style="margin:0; width: 150px;" onclick="sendEmergencyAlert()">Broadcast</button>
+                    </div>
+                    <div id="active-alerts" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <div id="reg-pane" class="pane">
+                <div class="card">
+                    <h2>Donor Registration</h2>
+                    <input type="text" id="regUser" placeholder="Full Name">
+                    <input type="email" id="regEmail" placeholder="Email">
+                    <input type="password" id="regPass" placeholder="Password">
+                    <input type="text" id="regPhone" placeholder="Phone">
+                    <input type="text" id="regLoc" placeholder="City">
+                    <select id="regBlood">
+                        <option value="">Blood Group</option>
+                        <option value="A+">A+</option><option value="O+">O+</option>
+                        <option value="B+">B+</option><option value="O-">O-</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="handleDonorSignUp()">Register Donor</button>
+                </div>
+            </div>
+
+            <div id="hosp-reg-pane" class="pane">
+                <div class="card">
+                    <h2>Hospital Partnership</h2>
+                    <input type="text" id="hospName" placeholder="Hospital Name">
+                    <input type="email" id="hospEmail" placeholder="Official Email">
+                    <input type="password" id="hospPass" placeholder="Password">
+                    <input type="text" id="hospAddress" placeholder="Address">
+                    <button class="btn btn-primary" onclick="handleHospitalSignUp()">Register Hospital</button>
+                </div>
+            </div>
+
+            <div id="login-pane" class="pane">
+                <div id="login-view" class="card">
+                    <h2>Sign In</h2>
+                    <input type="email" id="logEmail" placeholder="Email">
+                    <input type="password" id="logPass" placeholder="Password">
+                    <button class="btn btn-primary" onclick="handleLogin()">Login</button>
+                </div>
+                <div id="profile-view" style="display:none;">
+                    <div class="hero">
+                        <h2 id="prof-name">User</h2>
+                        <span id="rank-badge" class="rank-tag"></span>
+                        <h1 id="prof-count" style="font-size:3rem;">0</h1>
+                        <small>DONATIONS</small>
+                    </div>
+                    <button class="btn btn-danger" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
